@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}NotesApp{% endblock %}</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+        {% if session.get('user_id') %}
+    <form class="search-form" action="{{ url_for('search_notes') }}" method="GET">
+        <input type="text" name="q" placeholder="Search notes..." required>
+        <button type="submit"><i class="fa fa-search"></i></button>
+    </form>
+    {% endif %}
+
+    <!-- LEFT -->
+    <div class="nav-left">
+        <div class="nav-logo">📝 NotesApp</div>
+    </div>
+
+    
+
+    <!-- RIGHT -->
+    <div class="nav-right">
+
+        <!-- Theme -->
+        <button id="themeToggleBtn" class="theme-btn" onclick="toggleTheme()">🌙</button>
+
+        {% if session.get('user_id') %}
+            <a href="{{ url_for('viewall') }}">Dashboard</a>
+            <a href="{{ url_for('addnote') }}">Add Note</a>
+            <a href="{{ url_for('logout') }}" class="btn-danger">Logout</a>
+        {% else %}
+            <a href="{{ url_for('login') }}">Login</a>
+            <a href="{{ url_for('register') }}">Register</a>
+            <a href="{{ url_for('about') }}">About</a>
+            <a href="{{ url_for('contact') }}">Contact</a>
+        {% endif %}
+
+    </div>
+
+</nav>
+
+<!-- MAIN -->
+<main class="page">
+    
+    <!-- Flash messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert {{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <main class="main-area">
+    <div class="content-wrapper">
+        {% block content %}{% endblock %}
+    </div>
+</main>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="main-footer">
+    <div class="footer-content">
+        © 2026 Notes Management System · Built with Flask & MySQL <br>
+        <span>Developed by <strong>Anjana</strong></span>
+    </div>
+</footer>
+
+</body>
+</html>

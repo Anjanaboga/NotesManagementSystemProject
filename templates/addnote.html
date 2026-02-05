@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}Add Note{% endblock %}
+
+{% block content %}
+<div class="form-box">
+    <h2>Add a New Note</h2>
+
+    <form method="POST">
+        <label>Title</label>
+        <input 
+            type="text" 
+            name="title" 
+            placeholder="Enter note title" 
+            required
+        >
+
+        <label>Content</label>
+        <textarea 
+            name="content" 
+            rows="6" 
+            placeholder="Write your note here..." 
+            required
+        ></textarea>
+
+        <div class="btn-group">
+            <button type="submit" class="btn-primary">
+                Save Note
+            </button>
+
+            <!-- ✅ FIXED CANCEL -->
+            <a href="{{ url_for('viewall') }}" class="btn-cancel">
+                Cancel
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock %}

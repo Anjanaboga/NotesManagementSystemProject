@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}Search Results{% endblock %}
+
+{% block content %}
+
+<div class="section">
+
+<h2>🔎 Search Results</h2>
+
+<p class="muted-text">
+Results for: <strong>"{{ query }}"</strong>
+</p>
+
+{% if notes and notes|length > 0 %}
+    <div class="notes-list">
+        {% for note in notes %}
+            <div class="note-card">
+                <h3>📝 {{ note.title }}</h3>
+                <p>{{ note.content }}</p>
+
+                <div class="note-actions">
+                    <a href="{{ url_for('viewnotes', note_id=note.id) }}">View</a>
+                    <a href="{{ url_for('updatenote', note_id=note.id) }}">Edit</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="empty-box">
+        <p>No notes found matching your search.</p>
+    </div>
+{% endif %}
+
+<div style="margin-top:25px;">
+    <a class="back-btn" href="{{ url_for('viewall') }}">← Back to Dashboard</a>
+</div>
+
+</div>
+
+{% endblock %}
