@@ -13,7 +13,8 @@ load_dotenv()
 # App Initialization
 # --------------------
 app = Flask(__name__)
-app.secret_key = os.getenv("FLASK_SECRET_KEY", "myverysecretkey")
+app.secret_key = os.getenv("SECRET_KEY", "myverysecretkey")
+
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATABASE = os.path.join(BASE_DIR, "notes.db")
