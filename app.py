@@ -143,7 +143,7 @@ Email: {email}
 Message:
 {message}
 """
-        mail.send(msg)
+        #mail.send(msg)
 
         flash("Message sent successfully!", "success")
         return redirect('/contact')
