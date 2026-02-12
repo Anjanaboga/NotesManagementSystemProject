@@ -13,7 +13,7 @@ load_dotenv()
 # App Initialization
 # --------------------
 app = Flask(__name__)
-app.secret_key = os.getenv("SECRET_KEY", "myverysecretkey")
+app.secret_key = os.getenv("SECRET_KEY")
 
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -313,21 +313,24 @@ def forgot_password():
         conn.commit()
         conn.close()
 
-        reset_link = f"http://127.0.0.1:5000/reset/{token}"
+        reset_link = url_for('reset', token=token, _external=True)
+
 
         msg = Message(
             subject="🔐 Reset Your NotesApp Password",
             recipients=[email]
         )
         msg.body = f"""
-Hello,
+        Hello,
 
 Click the link below to reset your password:
 {reset_link}
 
 If you did not request this, ignore this email.
 """
-        mail.send(msg)
+        # mail.send(msg)
+        print("Reset link:", reset_link)
+
 
         flash("Password reset link sent to your email.", "success")
         return redirect('/login')
